@@ -1,5 +1,5 @@
-export type MealsByAreaType = {
+export type MealByAreaType = {
   strMeal: string;
   strMealThumb: string;
   idMeal: string;
-}[];
+};

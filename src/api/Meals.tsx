@@ -1,14 +1,14 @@
-import { MealsByAreaType } from "@/types";
+import { MealByAreaType } from "@/types";
 
 /**
  * Returns meals of an area (country)
  *
  * @param {string} area The area of meals to be fetched
- * @return {Promise<MealsByAreaType>} Promise of MealsByAreaType type
+ * @return {Promise<MealByAreaType[]>} Promise of MealsByAreaType type
  */
 export const fetchMealsByArea = async (
   area: string,
-): Promise<MealsByAreaType | null> => {
+): Promise<MealByAreaType[] | null> => {
   try {
     const response = await fetch(
       `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`,
