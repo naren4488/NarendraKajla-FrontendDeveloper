@@ -34,8 +34,6 @@ const HomePage = () => {
    * @param {string} newArea
    */
   const handleFilterUpdate = (newArea: string) => {
-    console.log(newArea);
-    console.log(area);
     setArea(newArea);
   };
 
