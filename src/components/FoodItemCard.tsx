@@ -17,7 +17,7 @@ const FoodItemCard = ({ foodItem }: { foodItem: MealByAreaType }) => {
 
   return (
     <div>
-      <Card className="group">
+      <Card className="group h-full">
         <CardContent className="p-3 ">
           <div className=" overflow-hidden rounded-md">
             <img
@@ -27,7 +27,7 @@ const FoodItemCard = ({ foodItem }: { foodItem: MealByAreaType }) => {
             />
           </div>
           <div className="mt-3">
-            <p className=" text-lg font-semibold">{foodItem.strMeal}</p>
+            <p className=" text-md font-semibold">{foodItem.strMeal}</p>
             <div className="flex items-center gap-1">
               <img src={starIcon} alt="" className="size-4" />
               <span>{generateRating(3, 5)}</span>
