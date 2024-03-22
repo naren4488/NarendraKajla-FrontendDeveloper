@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { ArrowDownAzIcon, ArrowDownZaIcon } from "lucide-react";
+import { ArrowDownAzIcon, ArrowUpZA } from "lucide-react";
 
 type Props = {
   sortOrder: string;
@@ -18,7 +18,7 @@ const SortBy = ({ sortOrder, handleSortBy }: Props) => {
         {sortOrder === "inc" ? (
           <ArrowDownAzIcon size={20} />
         ) : (
-          <ArrowDownZaIcon size={20} />
+          <ArrowUpZA size={20} />
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent>

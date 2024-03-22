@@ -9,8 +9,9 @@ import SortBy from "@/components/SortBy";
 const HomePage = () => {
   const [mealsByArea, setMealsByArea] = useState<MealByAreaType[] | null>();
   const [areaList, setAreaList] = useState<{ strArea: string }[] | null>();
-  const [area, setArea] = useState("Indian");
+  const [area, setArea] = useState("American");
   const [sortOrder, setSortOrder] = useState("inc");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // getting list of areas
   useEffect(() => {
@@ -27,6 +28,8 @@ const HomePage = () => {
     (async () => {
       const meals = await fetchMealsByArea(area);
       setMealsByArea(meals);
+      setSortOrder("inc");
+      setCurrentPage(1);
     })();
   }, [area]);
 
@@ -38,6 +41,11 @@ const HomePage = () => {
     setArea(newArea);
   };
 
+  /**
+   * handles the sort by functionality by updating sorting state as inc or dec
+   *
+   * @param sortValue sorting state as inc or dec
+   */
   const handleSortBy = (sortValue: string) => {
     setMealsByArea((prevState) => {
       if (
@@ -92,14 +100,18 @@ const HomePage = () => {
         </div>
 
         {/* Food Items section*/}
-        <div className="flex flex-col gap-8">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-            {mealsByArea.map((meal) => (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {mealsByArea
+            .slice((currentPage - 1) * 12, currentPage * 12)
+            .map((meal) => (
               <FoodItemCard key={meal.idMeal} foodItem={meal} />
             ))}
-          </div>
-          <PaginationSelector />
         </div>
+        <PaginationSelector
+          onPageChange={setCurrentPage}
+          currentPage={currentPage}
+          totalPages={Math.ceil(mealsByArea.length / 12)}
+        />
       </div>
     );
   }
