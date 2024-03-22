@@ -14,7 +14,7 @@ const HomePage = () => {
   const [sortOrder, setSortOrder] = useState("inc");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // getting list of areas
+  // Getting list of areas
   useEffect(() => {
     console.log("useEffect = main");
     (async () => {
@@ -23,7 +23,7 @@ const HomePage = () => {
     })();
   }, []);
 
-  // getting meals by area
+  // Getting meals by area
   useEffect(() => {
     console.log("useEffect == area", area);
     (async () => {
@@ -35,7 +35,7 @@ const HomePage = () => {
   }, [area]);
 
   /**
-   * handles the update in area from filters section
+   * Handles the update in area from filters section
    * @param {string} newArea
    */
   const handleFilterUpdate = (newArea: string) => {
@@ -43,7 +43,7 @@ const HomePage = () => {
   };
 
   /**
-   * handles the sort by functionality by updating sorting state as inc or dec
+   * Handles the sort by functionality by updating sorting state as inc or dec
    *
    * @param sortValue sorting state as inc or dec
    */
@@ -71,7 +71,7 @@ const HomePage = () => {
     console.log("reset filters");
   };
 
-  // in-case of server not responding
+  // In-case of server not responding
   if (mealsByArea === null) {
     return (
       <div className="">
@@ -84,7 +84,7 @@ const HomePage = () => {
     );
   }
 
-  // in-case of loading
+  // In-case of loading
   if (mealsByArea === undefined) {
     return <div>Loading Food Items...</div>;
   }
@@ -93,7 +93,7 @@ const HomePage = () => {
     return (
       <div className="flex flex-col gap-5">
         <div className="">
-          {/* filters section */}
+          {/* Filters section */}
           <h4 className="mb-3 text-xl font-bold">
             <span className=" text-orange-500">{area}</span> - Food Items
           </h4>
@@ -108,10 +108,10 @@ const HomePage = () => {
               />
             )}
 
-            {/* sort by */}
+            {/* Sort by */}
             <SortBy sortOrder={sortOrder} handleSortBy={handleSortBy} />
 
-            {/* reset filters */}
+            {/* Reset filters */}
             <Button
               variant={"link"}
               onClick={handleFilterReset}
