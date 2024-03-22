@@ -3,7 +3,7 @@ import { MealByAreaType } from "@/types";
 /**
  * Fetch meals of an area (country)
  *
- * @param {string} area The area of meals to be fetched
+ * @param {string} area The area for which meals to be fetched
  * @return {Promise<MealByAreaType[]>} Promise of MealsByAreaType type
  */
 export const fetchMealsByArea = async (

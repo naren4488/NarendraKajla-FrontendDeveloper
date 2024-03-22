@@ -5,11 +5,12 @@ import FoodItemCard from "@/components/FoodItemCard";
 import PaginationSelector from "@/components/PaginationSelector";
 import FilterByArea from "@/components/FilterByArea";
 import SortBy from "@/components/SortBy";
+import { Button } from "@/components/ui/button";
 
 const HomePage = () => {
   const [mealsByArea, setMealsByArea] = useState<MealByAreaType[] | null>();
   const [areaList, setAreaList] = useState<{ strArea: string }[] | null>();
-  const [area, setArea] = useState("American");
+  const [area, setArea] = useState("Indian");
   const [sortOrder, setSortOrder] = useState("inc");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -59,6 +60,18 @@ const HomePage = () => {
     setSortOrder(sortValue);
   };
 
+  /**
+   * Reset all the filters to default values
+   * - reset area to Indian
+   * - reset sort by to inc (A-Z)
+   */
+  const handleFilterReset = () => {
+    setSortOrder("inc");
+    setArea("Indian");
+    console.log("reset filters");
+  };
+
+  // in-case of server not responding
   if (mealsByArea === null) {
     return (
       <div className="">
@@ -71,6 +84,7 @@ const HomePage = () => {
     );
   }
 
+  // in-case of loading
   if (mealsByArea === undefined) {
     return <div>Loading Food Items...</div>;
   }
@@ -84,7 +98,7 @@ const HomePage = () => {
             <span className=" text-orange-500">{area}</span> - Food Items
           </h4>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             {/* Filter by area */}
             {areaList && (
               <FilterByArea
@@ -96,6 +110,15 @@ const HomePage = () => {
 
             {/* sort by */}
             <SortBy sortOrder={sortOrder} handleSortBy={handleSortBy} />
+
+            {/* reset filters */}
+            <Button
+              variant={"link"}
+              onClick={handleFilterReset}
+              className=" px-1 text-orange-500"
+            >
+              Reset All
+            </Button>
           </div>
         </div>
 
