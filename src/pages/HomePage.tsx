@@ -10,15 +10,24 @@ const HomePage = () => {
   const [areaList, setAreaList] = useState<{ strArea: string }[] | null>();
   const [area, setArea] = useState("Indian");
 
-  // By default fetch the Indian food items on page load
+  // getting list of areas
   useEffect(() => {
+    console.log("useEffect = main");
     (async () => {
-      const meals = await fetchMealsByArea("Indian");
       const areas = await fetchAreaList();
-      setMealsByArea(meals);
       setAreaList(areas);
     })();
   }, []);
+
+  // getting meals by area
+  useEffect(() => {
+    console.log("useEffect == area", area);
+    (async () => {
+      const meals = await fetchMealsByArea(area);
+      setMealsByArea(meals);
+      console.log("------", meals);
+    })();
+  }, [area]);
 
   /**
    * handles the update in area from filters section
@@ -26,6 +35,7 @@ const HomePage = () => {
    */
   const handleFilterUpdate = (newArea: string) => {
     console.log(newArea);
+    console.log(area);
     setArea(newArea);
   };
 
