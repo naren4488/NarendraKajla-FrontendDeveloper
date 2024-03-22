@@ -16,26 +16,24 @@ const FoodItemCard = ({ foodItem }: { foodItem: MealByAreaType }) => {
   };
 
   return (
-    <div>
-      <Card className="group h-full">
-        <CardContent className="p-3 ">
-          <div className=" overflow-hidden rounded-md">
-            <img
-              src={foodItem.strMealThumb}
-              alt="food item image"
-              className="h-full w-full   object-cover transition-all group-hover:scale-105 group-hover:brightness-75"
-            />
+    <Card className="group h-full">
+      <CardContent className="p-3 ">
+        <div className=" overflow-hidden rounded-md">
+          <img
+            src={foodItem.strMealThumb}
+            alt="food item image"
+            className="h-full w-full   object-cover transition-all group-hover:scale-105 group-hover:brightness-75"
+          />
+        </div>
+        <div className="mt-3">
+          <p className=" text-left text-lg font-semibold">{foodItem.strMeal}</p>
+          <div className="flex items-center gap-1">
+            <img src={starIcon} alt="" className="size-4" />
+            <span>{generateRating(3, 5)}</span>
           </div>
-          <div className="mt-3">
-            <p className=" text-md font-semibold">{foodItem.strMeal}</p>
-            <div className="flex items-center gap-1">
-              <img src={starIcon} alt="" className="size-4" />
-              <span>{generateRating(3, 5)}</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 

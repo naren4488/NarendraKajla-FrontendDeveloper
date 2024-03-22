@@ -126,7 +126,7 @@ const HomePage = () => {
             <span className=" text-orange-500">{area}</span> - Food Items
           </h4>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 text-[12px]">
             {/* Filter by area */}
             {areaList && (
               <FilterByArea
@@ -151,7 +151,7 @@ const HomePage = () => {
         </div>
 
         {/* Food Items section*/}
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid  grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {mealsByArea
             .slice((currentPage - 1) * 12, currentPage * 12)
             .map((meal) => (
@@ -161,7 +161,7 @@ const HomePage = () => {
                 }}
                 key={meal.idMeal}
               >
-                <DialogTrigger>
+                <DialogTrigger className="h-full">
                   <FoodItemCard foodItem={meal} />
                 </DialogTrigger>
                 {/* <DialogOverlay> */}
