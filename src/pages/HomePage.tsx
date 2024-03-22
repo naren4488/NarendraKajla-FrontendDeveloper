@@ -1,11 +1,13 @@
-import { fetchAreaList, fetchMealsByArea } from "@/api/Meals";
+import { fetchAreaList, fetchMealById, fetchMealsByArea } from "@/api/Meals";
 import { useEffect, useState } from "react";
-import { MealByAreaType } from "@/types";
+import { MealByAreaType, MealType } from "@/types";
 import FoodItemCard from "@/components/FoodItemCard";
 import PaginationSelector from "@/components/PaginationSelector";
 import FilterByArea from "@/components/FilterByArea";
 import SortBy from "@/components/SortBy";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import FoodItemModal from "@/components/FoodItemModal";
 
 const HomePage = () => {
   const [mealsByArea, setMealsByArea] = useState<MealByAreaType[] | null>();
@@ -13,6 +15,8 @@ const HomePage = () => {
   const [area, setArea] = useState("Indian");
   const [sortOrder, setSortOrder] = useState("inc");
   const [currentPage, setCurrentPage] = useState(1);
+  const [modalOpenId, setModalOpenId] = useState("");
+  const [selectedMealInfo, setSelectedMealInfo] = useState<MealType | null>();
 
   // Getting list of areas
   useEffect(() => {
@@ -33,6 +37,17 @@ const HomePage = () => {
       setCurrentPage(1);
     })();
   }, [area]);
+
+  // Getting meal info by id
+  useEffect(() => {
+    if (modalOpenId) {
+      (async () => {
+        const mealInfo = await fetchMealById(modalOpenId);
+        console.log(mealInfo);
+        setSelectedMealInfo(mealInfo);
+      })();
+    }
+  }, [modalOpenId]);
 
   /**
    * Handles the update in area from filters section
@@ -69,6 +84,22 @@ const HomePage = () => {
     setSortOrder("inc");
     setArea("Indian");
     console.log("reset filters");
+  };
+
+  /**
+   * Handle modal opening by setting id of selected food item to fetch its info
+   *
+   * @param {boolean} open status of modal open or close
+   * @param {string} mealid id of selected food item
+   */
+  const handleModalOpen = (open: boolean, mealid: string) => {
+    if (open)
+      setModalOpenId((prevId) => {
+        if (prevId !== mealid) {
+          setSelectedMealInfo(null);
+          return mealid;
+        } else return prevId;
+      });
   };
 
   // In-case of server not responding
@@ -127,7 +158,23 @@ const HomePage = () => {
           {mealsByArea
             .slice((currentPage - 1) * 12, currentPage * 12)
             .map((meal) => (
-              <FoodItemCard key={meal.idMeal} foodItem={meal} />
+              <Dialog
+                onOpenChange={(open) => {
+                  handleModalOpen(open, meal.idMeal);
+                }}
+                key={meal.idMeal}
+              >
+                <DialogTrigger>
+                  <FoodItemCard foodItem={meal} />
+                </DialogTrigger>
+                <DialogContent>
+                  {selectedMealInfo ? (
+                    <FoodItemModal mealInfo={selectedMealInfo} />
+                  ) : (
+                    <span>Loading...</span>
+                  )}
+                </DialogContent>
+              </Dialog>
             ))}
         </div>
         <PaginationSelector
