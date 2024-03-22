@@ -1,13 +1,14 @@
-import Filters from "@/components/Filters";
 import { fetchAreaList, fetchMealsByArea } from "@/api/Meals";
 import { useEffect, useState } from "react";
 import { MealByAreaType } from "@/types";
 import FoodItemCard from "@/components/FoodItemCard";
 import PaginationSelector from "@/components/PaginationSelector";
+import FilterByArea from "@/components/FilterByArea";
 
 const HomePage = () => {
   const [mealsByArea, setMealsByArea] = useState<MealByAreaType[] | null>();
   const [areaList, setAreaList] = useState<{ strArea: string }[] | null>();
+  const [area, setArea] = useState("Indian");
 
   // By default fetch the Indian food items on page load
   useEffect(() => {
@@ -19,9 +20,29 @@ const HomePage = () => {
     })();
   }, []);
 
+  /**
+   * handles the update in area from filters section
+   * @param {string} newArea
+   */
+  const handleFilterUpdate = (newArea: string) => {
+    console.log(newArea);
+    setArea(newArea);
+  };
+
   return (
     <div className="flex flex-col gap-5">
-      <Filters areaList={areaList} />
+      <h4 className="text-xl font-bold">{area} - Food Items</h4>
+
+      {/* Filters section */}
+      {areaList && (
+        <FilterByArea
+          areaList={areaList}
+          onSubmit={handleFilterUpdate}
+          currentArea={area}
+        />
+      )}
+
+      {/* Food Items section*/}
       <div className="">
         {mealsByArea ? (
           <div className="flex flex-col gap-8">
