@@ -20,7 +20,6 @@ const HomePage = () => {
 
   // Getting list of areas
   useEffect(() => {
-    console.log("useEffect = main");
     (async () => {
       const areas = await fetchAreaList();
       setAreaList(areas);
@@ -29,7 +28,6 @@ const HomePage = () => {
 
   // Getting meals by area
   useEffect(() => {
-    console.log("useEffect == area", area);
     (async () => {
       const meals = await fetchMealsByArea(area);
       setMealsByArea(meals);
@@ -43,7 +41,6 @@ const HomePage = () => {
     if (modalOpenId) {
       (async () => {
         const mealInfo = await fetchMealById(modalOpenId);
-        console.log(mealInfo);
         setSelectedMealInfo(mealInfo);
       })();
     }
@@ -167,13 +164,15 @@ const HomePage = () => {
                 <DialogTrigger>
                   <FoodItemCard foodItem={meal} />
                 </DialogTrigger>
-                <DialogContent>
+                {/* <DialogOverlay> */}
+                <DialogContent className="max-h-[90%] overflow-y-scroll lg:max-w-screen-lg">
                   {selectedMealInfo ? (
                     <FoodItemModal mealInfo={selectedMealInfo} />
                   ) : (
                     <span>Loading...</span>
                   )}
                 </DialogContent>
+                {/* </DialogOverlay> */}
               </Dialog>
             ))}
         </div>
